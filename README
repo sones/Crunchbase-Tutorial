@@ -1,0 +1,49 @@
+sones GraphDB Crunchbase Use-Case Tutorial
+==========================================
+
+If you want to explain how easy it is for a user or developer to use the
+sones GraphDB to work on exist­ing datasets you do that by showing him
+an example – a use case. And this is exactly what this short series of 
+articles will do: It’ll show the important steps and concepts, 
+technologies and designs behind the use case and the sones GraphDB.
+
+The sones GraphDB is a DBMS focusing on strong connected unstructured
+and semistructured data. As the name implies these data sets are 
+organized in Nodes and Edges objectoriented in a graph data structure.
+
+This series already tells in it’s name what the use case is: 
+The “CrunchBase”.  On their website they speak for themselves to 
+explain what it is: “CrunchBase is the free database of technology 
+companies, people, and investors that anyone can edit.”. There are many
+reasons why this was chosen as a use-case. One important reason is that
+all data behind the CrunchBase service is licensed under
+Creative-Commons-Attribution (CC-BY) license. So it’s freely available
+data of high-tech companies, people and investors.
+
+Currently there are more than 40.000 different companies, 51.000 different
+people and 4.200 different investors in the database. The flood of
+information is big and the scale of connectivity even bigger. The graph
+represented by the nodes could be even bigger than that but because of the
+limiting factors of current relational database technology it’s not feasible
+to try to do that.
+
+sones GraphDB is coming to the rescue: because it’s optimized to handle huge
+datasets of strongly connected data. Since the CrunchBase data could be uses
+as a starting point to drive connectivity to even greater detail it’s a great
+use-case to show these migration and handling.
+
+Thankfully the developers at CrunchBase already made one or two steps into an
+object oriented world by offering an API which answers queries in JSON format.
+By using this API everyone can access the complete data set in a very
+structured way. That’s both good and bad. Because the used technologies don’t
+offer a way to represent linked objects they had to use what we call
+“relational helpers”. For example: A person founded a company. (person and
+company being a JSON object). There’s no standardized way to model a
+relationship between those two. So what the CrunchBase developers did is they
+added an unique-Identifier to each object. And they added a new object which
+is uses as a “relational helper”-object. The only purpose of these helper
+objects is to point towards a unique-identifier of another object type. So in
+our example the relationship attribute of the person object is not pointing
+directly to a specific company or relationship, but it’s pointing to the helper
+object which stores the information which unique-identifier of which object
+type is meant by that link.
