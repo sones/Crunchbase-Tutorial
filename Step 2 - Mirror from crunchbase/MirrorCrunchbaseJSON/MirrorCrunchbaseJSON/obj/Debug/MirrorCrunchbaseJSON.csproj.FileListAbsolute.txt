@@ -1,0 +1,5 @@
+C:\Users\bietiekay.SONES\Desktop\Projects\Crunchbase\blog articles\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\bin\Debug\MirrorCrunchbaseJSON.exe
+C:\Users\bietiekay.SONES\Desktop\Projects\Crunchbase\blog articles\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\bin\Debug\MirrorCrunchbaseJSON.pdb
+C:\Users\bietiekay.SONES\Desktop\Projects\Crunchbase\blog articles\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bietiekay.SONES\Desktop\Projects\Crunchbase\blog articles\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\MirrorCrunchbaseJSON.exe
+C:\Users\bietiekay.SONES\Desktop\Projects\Crunchbase\blog articles\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\MirrorCrunchbaseJSON.pdb
