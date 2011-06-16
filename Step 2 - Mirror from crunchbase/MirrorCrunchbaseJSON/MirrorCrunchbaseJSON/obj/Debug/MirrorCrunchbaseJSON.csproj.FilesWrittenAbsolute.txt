@@ -1,0 +1,2 @@
+/Users/bietiekay/Coding/github/Crunchbase-Tutorial/Step 2 - Mirror from crunchbase/MirrorCrunchbaseJSON/MirrorCrunchbaseJSON/bin/Debug/MirrorCrunchbaseJSON.exe
+/Users/bietiekay/Coding/github/Crunchbase-Tutorial/Step 2 - Mirror from crunchbase/MirrorCrunchbaseJSON/MirrorCrunchbaseJSON/obj/Debug/MirrorCrunchbaseJSON.exe
