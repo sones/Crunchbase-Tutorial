@@ -72,8 +72,6 @@ namespace CrunchbaseGrabber
             //the number of tasks to determine how many threads start
             public List<DownloadChildFileTask> cdChildInfoTasks = new List<DownloadChildFileTask>(22);
 
-            //This is used to mark the end of ThreadTask
-            ManualResetEvent[] manualEventArray;
 
             //Record download status
             String m_ProgressPrefix = "";
@@ -94,6 +92,8 @@ namespace CrunchbaseGrabber
             public int RunChildFileDownloadTask()
             {
                 int CurrTaskNum = 0;
+
+                //This is used to mark the end of ThreadTask
                 ManualResetEvent[] manualEventArray = new ManualResetEvent[cdChildInfoTasks.Count];
 
                 //get task from cdChildInfoTasks
@@ -106,7 +106,7 @@ namespace CrunchbaseGrabber
 
                 }
 
-                //wait all task done
+                //wait for all task done
                 WaitHandle.WaitAll(manualEventArray);
                 
                 //clear the task list
