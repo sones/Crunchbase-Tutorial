@@ -4,3 +4,6 @@ C:\Users\bietiekay\Documents\My Dropbox\Crunchbase\blog articles\First-Import\Fi
 C:\Users\bietiekay\Documents\My Dropbox\Crunchbase\blog articles\First-Import\First-Import\First-Import\obj\x86\Debug\First-Import.exe
 C:\Users\bietiekay\Documents\My Dropbox\Crunchbase\blog articles\First-Import\First-Import\First-Import\obj\x86\Debug\First-Import.pdb
 C:\Users\bietiekay\Documents\My Dropbox\Crunchbase\blog articles\First-Import\First-Import\First-Import\bin\Debug\First-Import.exe.config
+O:\gitcrunchbase\Crunchbase-Tutorial\Step 3 - First Import\First-Import\bin\Debug\First-Import.exe.config
+O:\gitcrunchbase\Crunchbase-Tutorial\Step 3 - First Import\First-Import\obj\x86\Debug\First-Import.exe
+O:\gitcrunchbase\Crunchbase-Tutorial\Step 3 - First Import\First-Import\obj\x86\Debug\First-Import.pdb

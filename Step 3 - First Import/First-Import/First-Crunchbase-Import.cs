@@ -23,11 +23,13 @@ namespace First_Import
     {
         static String CorrectEscape(String Input)
         {
-            return Input.Replace("\n", "").Replace("\\","").Replace("\'","");
+            return Input.Replace("\n", "").Replace("\\", "").Replace("\'", "");
         }
 
         static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+
             Console.WriteLine("First Crunchbase Import tool");
             Console.WriteLine();
             Console.WriteLine("A small tool to create a gql script for the initial import of crunchbase");
@@ -40,139 +42,139 @@ namespace First_Import
             {
                 StreamWriter outfile2 = new StreamWriter("Step_3_Crunchbase_Company-Competitions.gql");
 
-                    string[] CompanyDirectory = Directory.GetFiles(".\\company\\", "*.js");
+                string[] CompanyDirectory = Directory.GetFiles(".\\company\\", "*.js");
 
-                    foreach (string fileName in CompanyDirectory)
+                foreach (string fileName in CompanyDirectory)
+                {
+                    Company deserialized = DeSerializeCompany.DeSerialize(fileName);
+
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.Append("INSERT INTO Company VALUES (");
+
+                    if (deserialized.alias_list != null)
+                        sb.Append("Alias_List = \'" + CorrectEscape(deserialized.alias_list) + "\',");
+
+                    if (deserialized.blog_feed_url != null)
+                        sb.Append("BlogFeedURL = \'" + CorrectEscape(deserialized.blog_feed_url) + "\',");
+
+                    if (deserialized.blog_url != null)
+                        sb.Append("BlogURL = \'" + CorrectEscape(deserialized.blog_url) + "\',");
+
+                    if (deserialized.name != null)
+                        sb.Append("Name = \'" + CorrectEscape(deserialized.name) + "\',");
+
+                    if (deserialized.category_code != null)
+                        sb.Append("Category = \'" + CorrectEscape(deserialized.category_code) + "\',");
+
+                    if (deserialized.crunchbase_url != null)
+                        sb.Append("CrunchbaseURL = \'" + CorrectEscape(deserialized.crunchbase_url) + "\',");
+
+                    if (deserialized.deadpooled_year != null)
                     {
-                        Company deserialized = DeSerializeCompany.DeSerialize(fileName);
+                        if (deserialized.deadpooled_month == null)
+                            deserialized.deadpooled_month = "1";
+                        if (deserialized.deadpooled_day == null)
+                            deserialized.deadpooled_day = "1";
 
-                        StringBuilder sb = new StringBuilder();
+                        DateTime deadpooled = new DateTime(Convert.ToInt32(deserialized.deadpooled_year), Convert.ToInt32(deserialized.deadpooled_month), Convert.ToInt32(deserialized.deadpooled_day));
+                        sb.Append("Deadpooled_At = \'" + deadpooled + "\',");
+                    }
 
-                        sb.Append("INSERT INTO Company VALUES (");
+                    if (deserialized.description != null)
+                        sb.Append("Description = \'" + CorrectEscape(deserialized.description) + "\',");
 
-                        if (deserialized.alias_list != null)
-                            sb.Append("Alias_List = \'" + CorrectEscape(deserialized.alias_list) + "\',");
+                    if (deserialized.number_of_employees != null)
+                        sb.Append("NumberOfEmployees = " + CorrectEscape(deserialized.number_of_employees) + ",");
 
-                        if (deserialized.blog_feed_url != null)
-                            sb.Append("BlogFeedURL = \'" + CorrectEscape(deserialized.blog_feed_url) + "\',");
+                    if (deserialized.email_address != null)
+                        sb.Append("EMailAdress = \'" + CorrectEscape(deserialized.email_address) + "\',");
 
-                        if (deserialized.blog_url != null)
-                            sb.Append("BlogURL = \'" + CorrectEscape(deserialized.blog_url) + "\',");
+                    if (deserialized.founded_year != null)
+                    {
+                        if (deserialized.founded_month == null)
+                            deserialized.founded_month = "1";
+                        if (deserialized.founded_day == null)
+                            deserialized.founded_day = "1";
 
-                        if (deserialized.name != null)
-                            sb.Append("Name = \'" + CorrectEscape(deserialized.name) + "\',");
+                        DateTime founded = new DateTime(Convert.ToInt32(deserialized.founded_year), Convert.ToInt32(deserialized.founded_month), Convert.ToInt32(deserialized.founded_day));
+                        sb.Append("Founded_At = \'" + founded + "\',");
+                    }
 
-                        if (deserialized.category_code != null)
-                            sb.Append("Category = \'" + CorrectEscape(deserialized.category_code) + "\',");
+                    if (deserialized.homepage_url != null)
+                        sb.Append("HomepageURL = \'" + CorrectEscape(deserialized.homepage_url) + "\',");
 
-                        if (deserialized.crunchbase_url != null)
-                            sb.Append("CrunchbaseURL = \'" + CorrectEscape(deserialized.crunchbase_url) + "\',");
+                    if (deserialized.overview != null)
+                        sb.Append("Overview = \'" + CorrectEscape(deserialized.overview) + "\',");
 
-                        if (deserialized.deadpooled_year != null)
+                    if (deserialized.permalink != null)
+                        sb.Append("Permalink = \'" + CorrectEscape(deserialized.permalink) + "\',");
+
+                    if (deserialized.phone_number != null)
+                        sb.Append("PhoneNumber = \'" + CorrectEscape(deserialized.phone_number) + "\',");
+
+                    if (deserialized.tag_list != null)
+                        sb.Append("Tags = \'" + CorrectEscape(deserialized.tag_list) + "\',");
+
+                    if (deserialized.twitter_username != null)
+                        sb.Append("TwitterUsername = \'" + CorrectEscape(deserialized.twitter_username) + "\',");
+
+                    if (deserialized.updated_at != null)
+                    {
+                        // Mon, 6 Oct 2003 18:39:47 UTC
+                        // ddd, d MMM yyyy hh:mm:s
+
+                        // Wed Dec 23 17:47:41 UTC 2009
+                        // ddd MMM d hh:mm:ss UTC yyyy
+
+                        CultureInfo enUS = new CultureInfo("en-US");
+
+                        String expectedFormat = "ddd MMM d H:mm:ss yyyy";
+                        //String expectedFormat = "g";
+                        DateTime updated_at = DateTime.ParseExact(deserialized.updated_at.Replace("UTC ", ""), expectedFormat, enUS, DateTimeStyles.AssumeUniversal);
+
+                        sb.Append("Updated_At = \'" + updated_at.ToString() + "\',");
+                    }
+
+                    if (deserialized.created_at != null)
+                    {
+                        CultureInfo enUS = new CultureInfo("en-US");
+                        String expectedFormat = "ddd MMM d H:mm:ss yyyy";
+                        DateTime created_at = DateTime.ParseExact(deserialized.created_at.Replace("UTC ", ""), expectedFormat, enUS, DateTimeStyles.AssumeUniversal);
+
+                        sb.Append("Created_At = \'" + created_at.ToString() + "\',");
+                    }
+
+                    sb.Remove(sb.Length - 1, 1);
+
+                    sb.Append(")");
+
+                    //Console.WriteLine(sb.ToString());
+
+                    outfile.WriteLine(sb.ToString());
+
+                    if (deserialized.Competitions != null)
+                    {
+                        StringBuilder permalinks = new StringBuilder();
+
+                        foreach (Dictionary<string, Competitor> competitor_dict in deserialized.Competitions)
                         {
-                            if (deserialized.deadpooled_month == null)
-                                deserialized.deadpooled_month = "1";
-                            if (deserialized.deadpooled_day == null)
-                                deserialized.deadpooled_day = "1";
-
-                            DateTime deadpooled = new DateTime(Convert.ToInt32(deserialized.deadpooled_year), Convert.ToInt32(deserialized.deadpooled_month), Convert.ToInt32(deserialized.deadpooled_day));
-                            sb.Append("Deadpooled_At = \'" + deadpooled + "\',");
-                        }
-
-                        if (deserialized.description != null)
-                            sb.Append("Description = \'" + CorrectEscape(deserialized.description) + "\',");
-
-                        if (deserialized.number_of_employees != null)
-                            sb.Append("NumberOfEmployees = " + CorrectEscape(deserialized.number_of_employees) + ",");
-
-                        if (deserialized.email_address != null)
-                            sb.Append("EMailAdress = \'" + CorrectEscape(deserialized.email_address) + "\',");
-
-                        if (deserialized.founded_year != null)
-                        {
-                            if (deserialized.founded_month == null)
-                                deserialized.founded_month = "1";
-                            if (deserialized.founded_day == null)
-                                deserialized.founded_day = "1";
-
-                            DateTime founded = new DateTime(Convert.ToInt32(deserialized.founded_year), Convert.ToInt32(deserialized.founded_month), Convert.ToInt32(deserialized.founded_day));
-                            sb.Append("Founded_At = \'" + founded + "\',");
-                        }
-
-                        if (deserialized.homepage_url != null)
-                            sb.Append("HomepageURL = \'" + CorrectEscape(deserialized.homepage_url) + "\',");
-
-                        if (deserialized.overview != null)
-                            sb.Append("Overview = \'" + CorrectEscape(deserialized.overview) + "\',");
-
-                        if (deserialized.permalink != null)
-                            sb.Append("Permalink = \'" + CorrectEscape(deserialized.permalink) + "\',");
-
-                        if (deserialized.phone_number != null)
-                            sb.Append("PhoneNumber = \'" + CorrectEscape(deserialized.phone_number) + "\',");
-
-                        if (deserialized.tag_list != null)
-                            sb.Append("Tags = \'" + CorrectEscape(deserialized.tag_list) + "\',");
-
-                        if (deserialized.twitter_username != null)
-                            sb.Append("TwitterUsername = \'" + CorrectEscape(deserialized.twitter_username) + "\',");
-
-                        if (deserialized.updated_at != null)
-                        {
-                            // Mon, 6 Oct 2003 18:39:47 UTC
-                            // ddd, d MMM yyyy hh:mm:s
-
-                            // Wed Dec 23 17:47:41 UTC 2009
-                            // ddd MMM d hh:mm:ss UTC yyyy
-
-                            CultureInfo enUS = new CultureInfo("en-US");
-
-                            String expectedFormat = "ddd MMM d H:mm:ss yyyy";
-                            //String expectedFormat = "g";
-                            DateTime updated_at = DateTime.ParseExact(deserialized.updated_at.Replace("UTC ", ""), expectedFormat, enUS, DateTimeStyles.AssumeUniversal);
-
-                            sb.Append("Updated_At = \'" + updated_at.ToString() + "\',");
-                        }
-
-                        if (deserialized.created_at != null)
-                        {
-                            CultureInfo enUS = new CultureInfo("en-US");
-                            String expectedFormat = "ddd MMM d H:mm:ss yyyy";
-                            DateTime created_at = DateTime.ParseExact(deserialized.created_at.Replace("UTC ", ""), expectedFormat, enUS, DateTimeStyles.AssumeUniversal);
-
-                            sb.Append("Created_At = \'" + created_at.ToString() + "\',");
-                        }
-
-                        sb.Remove(sb.Length - 1, 1);
-
-                        sb.Append(")");
-
-                        //Console.WriteLine(sb.ToString());
-
-                        outfile.WriteLine(sb.ToString());
-
-                        if (deserialized.Competitions != null)
-                        {
-                            StringBuilder permalinks = new StringBuilder();
-
-                            foreach (Dictionary<string, Competitor> competitor_dict in deserialized.Competitions)
+                            foreach (Competitor _competitor in competitor_dict.Values)
                             {
-                                foreach (Competitor _competitor in competitor_dict.Values)
-                                {
-                                    permalinks.Append("Permalink = \'" + _competitor.permalink + "\',");
-                                }
-                            }
-                            
-                            // remove ending ,
-                            if (permalinks.Length > 0)
-                            {
-                                permalinks.Remove(permalinks.Length - 1, 1);
-                                outfile2.WriteLine("UPDATE Company SET (ADD TO Competitions SETOF(" + permalinks.ToString() + ")) WHERE Permalink = \'" + deserialized.permalink + "\'");
+                                permalinks.Append("Permalink = \'" + _competitor.permalink + "\',");
                             }
                         }
+
+                        // remove ending ,
+                        if (permalinks.Length > 0)
+                        {
+                            permalinks.Remove(permalinks.Length - 1, 1);
+                            outfile2.WriteLine("UPDATE Company SET (Competitions += SETOF(" + permalinks.ToString() + ")) WHERE Permalink = \'" + deserialized.permalink + "\'");
+                        }
+                    }
                 }
-                    outfile.Close();
-                    outfile2.Close();
+                outfile.Close();
+                outfile2.Close();
 
             }
             #endregion
@@ -231,13 +233,13 @@ namespace First_Import
 
                     if (newFinancialOrganization.homepage_url != null)
                         sb.Append("HomepageURL = \'" + CorrectEscape(newFinancialOrganization.homepage_url) + "\',");
-                    
+
                     if (newFinancialOrganization.name != null)
                         sb.Append("Name = \'" + CorrectEscape(newFinancialOrganization.name) + "\',");
 
                     if (newFinancialOrganization.number_of_employees != null)
                         sb.Append("NumberOfEmployees = " + CorrectEscape(newFinancialOrganization.number_of_employees) + ",");
-                    
+
                     if (newFinancialOrganization.overview != null)
                         sb.Append("Overview = \'" + CorrectEscape(newFinancialOrganization.overview) + "\',");
 
@@ -322,11 +324,11 @@ namespace First_Import
                         DateTime deadpooled = new DateTime(Convert.ToInt32(deserialized.deadpooled_year), Convert.ToInt32(deserialized.deadpooled_month), Convert.ToInt32(deserialized.deadpooled_day));
                         sb.Append("Deadpooled_At = \'" + deadpooled + "\',");
                     }
-                    
+
                     if (deserialized.homepage_url != null)
                         sb.Append("HomepageURL = \'" + CorrectEscape(deserialized.homepage_url) + "\',");
 
-                    if (deserialized.invite_share_url!= null)
+                    if (deserialized.invite_share_url != null)
                         sb.Append("InviteShareURL = \'" + CorrectEscape(deserialized.invite_share_url) + "\',");
 
                     if (deserialized.launched_year != null)
@@ -414,7 +416,7 @@ namespace First_Import
                     if (deserialized.affiliation_name != null)
                         sb.Append("AffiliationName = \'" + CorrectEscape(deserialized.affiliation_name) + "\',");
 
-                    if (deserialized.alias_list!= null)
+                    if (deserialized.alias_list != null)
                         sb.Append("Alias_List = \'" + CorrectEscape(deserialized.alias_list) + "\',");
 
                     if (deserialized.birthplace != null)
@@ -426,7 +428,7 @@ namespace First_Import
                     if (deserialized.blog_url != null)
                         sb.Append("BlogURL = \'" + CorrectEscape(deserialized.blog_url) + "\',");
 
-                    if (deserialized.born_year!= null)
+                    if (deserialized.born_year != null)
                     {
                         if (deserialized.born_month == null)
                             deserialized.born_month = "1";
@@ -569,8 +571,6 @@ namespace First_Import
 
                         sb.Append("Updated_At = \'" + updated_at.ToString() + "\',");
                     }
-
-
 
                     sb.Remove(sb.Length - 1, 1);
 
