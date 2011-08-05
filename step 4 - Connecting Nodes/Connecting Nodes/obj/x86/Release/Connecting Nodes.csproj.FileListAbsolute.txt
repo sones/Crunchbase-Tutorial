@@ -1,0 +1,11 @@
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\bin\Release\Connecting Nodes.exe.config
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\bin\Release\Connecting Nodes.exe
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\bin\Release\Connecting Nodes.pdb
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\bin\Release\Model.dll
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\bin\Release\Model.pdb
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\obj\x86\Release\Connecting Nodes.exe
+C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Connecting Nodes\obj\x86\Release\Connecting Nodes.pdb
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\step 4 - Connecting Nodes\Connecting Nodes\bin\Release\Connecting Nodes.exe.config
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\step 4 - Connecting Nodes\Connecting Nodes\obj\x86\Release\Connecting Nodes.exe
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\step 4 - Connecting Nodes\Connecting Nodes\obj\x86\Release\Connecting Nodes.pdb
