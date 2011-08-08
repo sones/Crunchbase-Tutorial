@@ -17,6 +17,7 @@ using System.Web.Script.Serialization;
 using System.Net;
 using System.IO;
 using System.Threading;
+using System.Security.Cryptography;
 
 namespace CrunchbaseGrabber
 {
@@ -126,6 +127,23 @@ namespace CrunchbaseGrabber
             }
             #endregion
 
+            public static string GetMD5Hash(string TextToHash)
+            {
+                //Prüfen ob Daten übergeben wurden.
+                if ((TextToHash == null) || (TextToHash.Length == 0))
+                {
+                    return string.Empty;
+                }
+
+                //MD5 Hash aus dem String berechnen. Dazu muss der string in ein Byte[]
+                //zerlegt werden. Danach muss das Resultat wieder zurück in ein string.
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] textToHash = Encoding.Default.GetBytes(TextToHash);
+                byte[] result = md5.ComputeHash(textToHash);
+
+                return System.BitConverter.ToString(result);
+            }
+
             #region DownloadParentFileAndGetParentInfo
             //this is how we call out to crunchbase to get their full string of Children
             //download parent file like companies.js/people.js
@@ -158,7 +176,7 @@ namespace CrunchbaseGrabber
             {
 
                 string filename = slink.Replace(Path.DirectorySeparatorChar, ' ');
-                string sChildPath = "crunchbase" + Path.DirectorySeparatorChar + sFilePathDiff + Path.DirectorySeparatorChar + filename + ".js";
+                string sChildPath = "crunchbase" + Path.DirectorySeparatorChar + sFilePathDiff + Path.DirectorySeparatorChar + GetMD5Hash(filename) + ".js";
 
                 if (!File.Exists(sChildPath))
                 {
