@@ -1,5 +1,0 @@
-C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Model\bin\Release\Model.dll
-C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Model\bin\Release\Model.pdb
-C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Model\obj\Release\ResolveAssemblyReference.cache
-C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Model\obj\Release\Model.dll
-C:\Users\andriy\Desktop\tutorial\sones-Crunchbase-Tutorial-508adc3\step 4 - Connecting Nodes\Model\obj\Release\Model.pdb

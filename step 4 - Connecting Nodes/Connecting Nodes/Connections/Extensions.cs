@@ -49,17 +49,26 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (value == null)
                 return string.Empty;
 
+            if (value == null)
+                return string.Empty;
+
+
+
             var args = extraArgs.ToList();
-            if (value.GetType() == typeof(String) || value.GetType() == typeof(DateTime))
-                args.Insert(0, "'" + value.ToString().Replace("'", "''") + "'");
-            else if (value.GetType() == typeof(double))
-                args.Insert(0, (value as Nullable<double>).Value.ToString(CultureInfo.GetCultureInfo("en-US")));
-            else if (value.GetType() == typeof(float))
-                args.Insert(0, (value as Nullable<float>).Value.ToString(CultureInfo.GetCultureInfo("en-US")));
-            else if (value.GetType() == typeof(decimal))
-                args.Insert(0, (value as Nullable<decimal>).Value.ToString(CultureInfo.GetCultureInfo("en-US")));
+            if (value.GetType() == typeof(String))
+                args.Insert(0, "'" + value.ToString().Replace('\n', ' ').Replace('\r', ' ').Replace("'", "''").Replace("\\", " ") + "'");
             else
-                args.Insert(0, value);
+                if (value.GetType() == typeof(DateTime))
+                    args.Insert(0, "'" + (value as Nullable<DateTime>).Value.ToString(CultureInfo.GetCultureInfo("en-US")) + "'");
+                else if (value.GetType() == typeof(double))
+                    args.Insert(0, (value as Nullable<double>).Value.ToString(CultureInfo.GetCultureInfo("en-US")));
+                else if (value.GetType() == typeof(float))
+                    args.Insert(0, (value as Nullable<float>).Value.ToString(CultureInfo.GetCultureInfo("en-US")));
+                else if (value.GetType() == typeof(decimal))
+                    args.Insert(0, (value as Nullable<decimal>).Value.ToString(CultureInfo.GetCultureInfo("en-US")));
+                else
+                    args.Insert(0, value);
+
             return template.StringFormat(args.ToArray());
         }
     }

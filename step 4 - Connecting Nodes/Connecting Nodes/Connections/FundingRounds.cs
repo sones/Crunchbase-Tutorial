@@ -65,9 +65,9 @@ namespace Crunchbase.ConnectingNodes.Connections
         {
             if (investors != null && investors.Count > 0)
             {
-                writer.Write(GetPermalinks(investors, "company").GetSETOF("CompanyInvestors", "Permalink"));
-                writer.Write(GetPermalinks(investors, "financial_org").GetSETOF("FinancialOrganizationInvestors", "Permalink"));
-                writer.Write(GetPermalinks(investors, "person").GetSETOF("PersonInvestors", "Permalink"));
+                writer.Write(GetPermalinks(investors, "company").GetSETOF("CompanyInvestors", "Permalink").StringWithComma());
+                writer.Write(GetPermalinks(investors, "financial_org").GetSETOF("FinancialOrganizationInvestors", "Permalink").StringWithComma());
+                writer.Write(GetPermalinks(investors, "person").GetSETOF("PersonInvestors", "Permalink").StringWithComma());
             }
         }
 
