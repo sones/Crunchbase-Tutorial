@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical" MembersFormat="FullSignature">
+  <Class Name="Crunchbase.Model.Acquisition">
+    <Position X="10.5" Y="9.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAgAAAAAAACAAAACAAAAAEAAAAAAAAIAACAAQ=</HashCode>
+      <FileName>Acquisition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Company">
+    <Position X="1" Y="0.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>BwBDAAIAAAAACkEUISoAEKESECEEAAAAggiyBCAAEAA=</HashCode>
+      <FileName>Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Degree">
+    <Position X="1" Y="13" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAIEAAABAAAAAAAAAAACAAAAAAAABAAAAAAgAAAA=</HashCode>
+      <FileName>Degree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Fund">
+    <Position X="6.5" Y="13" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAACAIBAAAAAAAEgAAAAAAAKABAAAA=</HashCode>
+      <FileName>Fund.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Image">
+    <Position X="8.75" Y="16.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Image.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.IPO">
+    <Position X="12.75" Y="13" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAgEAAAAAAAAAgAAAAAABAAgAAAAAAAACAAA=</HashCode>
+      <FileName>IPO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Link">
+    <Position X="1" Y="16.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Link.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Milestone">
+    <Position X="9.75" Y="13" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAABAAAAAAAAAKAAAAIAAQAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Milestone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Office">
+    <Position X="3.75" Y="13" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAggAAAAAAAIAAACAAIDAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Office.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Permalink">
+    <Position X="13.5" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Permalink.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Person">
+    <Position X="15.5" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AQARAAAAABAACwAUASIAECAAECMACAAAAACAACAoUAA=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Product">
+    <Position X="12.25" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AwACAAAAAAAAikBUASoAECAAECMEAAAAgACAACAAEQQ=</HashCode>
+      <FileName>Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Providership">
+    <Position X="1" Y="9.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Providership.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Relationship">
+    <Position X="3.75" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Relationship.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.ServiceProvider">
+    <Position X="9.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>BAABAAAAAAAACgAQASIAECAAECAEAAAAAACCACAAAAA=</HashCode>
+      <FileName>ServiceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.Video">
+    <Position X="6" Y="16.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Video.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.WebPresence">
+    <Position X="3.5" Y="16.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebPresence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.FinancialOrganization">
+    <Position X="5.75" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>BwBBAAAAAAAACgEUISIAECACUCEEAAAAAgCCACAAEAA=</HashCode>
+      <FileName>FinancialOrganisation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.FundingRound">
+    <Position X="6.25" Y="9.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACEAAGAIAAAAEAAAAgAAAAAAAKABAAAA=</HashCode>
+      <FileName>FundingRound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crunchbase.Model.ImageSize">
+    <Position X="11.5" Y="16.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAIAAAAAAABAAAAA=</HashCode>
+      <FileName>Image.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
