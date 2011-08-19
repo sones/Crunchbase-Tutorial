@@ -1,5 +1,7 @@
-CREATE INDEX IDX_Company_Permalink ON VERTEX TYPE Company (String Permalink) INDEXTYPE Hashtable
-CREATE INDEX IDX_FinancialOrganization_Permalink ON VERTEX TYPE FinancialOrganization (String Permalink) INDEXTYPE Hashtable
-CREATE INDEX IDX_Product_Permalink ON VERTEX TYPE Product (String Permalink) INDEXTYPE Hashtable
-CREATE INDEX IDX_Person_Permalink ON VERTEX TYPE Person (String Permalink) INDEXTYPE Hashtable
-CREATE INDEX IDX_ServiceProvider_Permalink ON VERTEX TYPE ServiceProvider (String Permalink) INDEXTYPE Hashtable
+CREATE INDEX IDX_Company_Permalink ON VERTEX TYPE Company (Permalink) INDEXTYPE SingleValueIndex
+
+CREATE INDEX IDX_FinancialOrganization_Permalink ON VERTEX TYPE FinancialOrganization (Permalink) INDEXTYPE SingleValueIndex
+
+CREATE INDEX IDX_Product_Permalink ON VERTEX TYPE Product (Permalink) INDEXTYPE SingleValueIndex
+CREATE INDEX IDX_Person_Permalink ON VERTEX TYPE Person (Permalink) INDEXTYPE SingleValueIndex
+CREATE INDEX IDX_ServiceProvider_Permalink ON VERTEX TYPE ServiceProvider (Permalink) INDEXTYPE SingleValueIndex
