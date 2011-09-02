@@ -51,7 +51,9 @@ namespace First_Import
         //this is how we call out to crunchbase to get their full list of companies
         public static Company DeSerialize(String Filename)
         {
-            String jsonStream = File.ReadAllText(Filename);
+            
+			String jsonStream = File.ReadAllText(Filename);
+            jsonStream = new CorrectOutput().output(jsonStream);
             JavaScriptSerializer ser = new JavaScriptSerializer();
             ser.MaxJsonLength = 20000000;
             //stick it into a list

@@ -34,6 +34,7 @@ namespace First_Import
         public static Person DeSerialize(String Filename)
         {
             String jsonStream = File.ReadAllText(Filename);
+            jsonStream = new CorrectOutput().output(jsonStream);
             JavaScriptSerializer ser = new JavaScriptSerializer();
             ser.MaxJsonLength = 20000000;
             //stick it into a list
