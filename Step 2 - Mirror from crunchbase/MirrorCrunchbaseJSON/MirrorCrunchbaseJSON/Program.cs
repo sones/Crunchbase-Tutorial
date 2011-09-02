@@ -21,6 +21,7 @@ using System.Security.Cryptography;
 
 namespace CrunchbaseGrabber
 {
+
     class Program
     {
         #region GetJsonStream
@@ -50,7 +51,7 @@ namespace CrunchbaseGrabber
         }
         #endregion
         #region GetInfo
-        public class DownloadChildFileTask 
+        public class DownloadChildFileTask
         {
             public String sWebPath { get; set; }
             public String slink { get; set; }
@@ -66,6 +67,7 @@ namespace CrunchbaseGrabber
 
         public class DownloadFile
         {
+            UInt64 iCount = 0;
             #region Variable
 
             //The current need to download the list of tasks,
@@ -88,7 +90,7 @@ namespace CrunchbaseGrabber
             #endregion
 
             #region RunTask
-            
+
             //Run download task,
             public int RunChildFileDownloadTask()
             {
@@ -103,13 +105,13 @@ namespace CrunchbaseGrabber
 
                     manualEventArray[CurrTaskNum] = new ManualResetEvent(false);
                     ThreadPara para = new ThreadPara() { m_Event = manualEventArray[CurrTaskNum], num = CurrTaskNum };
-                    ThreadPool.QueueUserWorkItem(RunAChildTask, para);   
+                    ThreadPool.QueueUserWorkItem(RunAChildTask, para);
 
                 }
 
                 //wait for all task done
                 WaitHandle.WaitAll(manualEventArray);
-                
+
                 //clear the task list
                 cdChildInfoTasks.Clear();
 
@@ -121,33 +123,17 @@ namespace CrunchbaseGrabber
             {
                 int num = ((ThreadPara)obj).num;
 
-                DownloadChildFile( cdChildInfoTasks[num].sWebPath,cdChildInfoTasks[num].slink,cdChildInfoTasks[num].sFilePathDiff);
+                DownloadChildFile(cdChildInfoTasks[num].sWebPath, cdChildInfoTasks[num].slink, cdChildInfoTasks[num].sFilePathDiff);
 
                 ((ThreadPara)obj).m_Event.Set();
             }
             #endregion
 
-            public static string GetMD5Hash(string TextToHash)
-            {
-                //Prüfen ob Daten übergeben wurden.
-                if ((TextToHash == null) || (TextToHash.Length == 0))
-                {
-                    return string.Empty;
-                }
-
-                //MD5 Hash aus dem String berechnen. Dazu muss der string in ein Byte[]
-                //zerlegt werden. Danach muss das Resultat wieder zurück in ein string.
-                MD5 md5 = new MD5CryptoServiceProvider();
-                byte[] textToHash = Encoding.Default.GetBytes(TextToHash);
-                byte[] result = md5.ComputeHash(textToHash);
-
-                return System.BitConverter.ToString(result);
-            }
 
             #region DownloadParentFileAndGetParentInfo
             //this is how we call out to crunchbase to get their full string of Children
             //download parent file like companies.js/people.js
-            public String DownloadParentFileAndGetParentInfo(String sWebPath,  String sParentName,String sSaveFilePath)
+            public String DownloadParentFileAndGetParentInfo(String sWebPath, String sParentName, String sSaveFilePath)
             {
                 Console.Write("Getting all " + sParentName + " names...");
 
@@ -172,11 +158,11 @@ namespace CrunchbaseGrabber
 
             #region DownloadChildFile
             //download child file
-            public void DownloadChildFile(String sWebPath, String slink,  String sFilePathDiff)
+            public void DownloadChildFile(String sWebPath, String slink, String sFilePathDiff)
             {
 
                 string filename = slink.Replace(Path.DirectorySeparatorChar, ' ');
-                string sChildPath = "crunchbase" + Path.DirectorySeparatorChar + sFilePathDiff + Path.DirectorySeparatorChar + GetMD5Hash(filename) + ".js";
+                string sChildPath = "crunchbase" + Path.DirectorySeparatorChar + sFilePathDiff + Path.DirectorySeparatorChar + (iCount++).ToString() + ".js";
 
                 if (!File.Exists(sChildPath))
                 {
@@ -188,9 +174,9 @@ namespace CrunchbaseGrabber
                         file.Close();
                     }
                 }
-        
+
                 Console.Write(".");
-               // Thread.Sleep(500);
+                // Thread.Sleep(500);
             }
             #endregion
 
@@ -199,7 +185,7 @@ namespace CrunchbaseGrabber
             public void ShowDownloadProgress(long CurrNum, long AllNum, String CurrPrefix)
             {
                 //display is updated every 100 files completed
-                if (CurrNum == AllNum||CurrNum % 100 == 0)
+                if (CurrNum == AllNum || CurrNum % 100 == 0)
                 {
                     if (m_LastPrefix == null)
                     {
@@ -209,14 +195,14 @@ namespace CrunchbaseGrabber
 
                     if (m_LastPrefix != CurrPrefix)
                     {
-                        m_ProgressPrefix = m_ProgressPrefix +  m_LastPrefix + "   100%  total:"+ m_LastFileNum.ToString() +"\n\r";
+                        m_ProgressPrefix = m_ProgressPrefix + m_LastPrefix + "   100%  total:" + m_LastFileNum.ToString() + "\n\r";
                         m_LastPrefix = CurrPrefix;
                         m_LastFileNum = AllNum;
                     }
                     Console.Clear();
-                    double progress =(double) CurrNum/AllNum;
+                    double progress = (double)CurrNum / AllNum;
 
-                    Console.Write(m_ProgressPrefix + CurrPrefix + "   " + progress.ToString("P") + "   " + CurrNum.ToString()+ "/" + AllNum.ToString() + "\n\r");
+                    Console.Write(m_ProgressPrefix + CurrPrefix + "   " + progress.ToString("P") + "   " + CurrNum.ToString() + "/" + AllNum.ToString() + "\n\r");
                 }
             }
             #endregion
@@ -245,19 +231,19 @@ namespace CrunchbaseGrabber
 
             if (!Directory.Exists("crunchbase"))
                 Directory.CreateDirectory("crunchbase");
-            
+
             #region Companies
 
-            
+
             String companies = myDownload.DownloadParentFileAndGetParentInfo("http://api.crunchbase.com/v/1/companies.js", "company", "crunchbase" + Path.DirectorySeparatorChar + "companies.js");
 
             Console.Write("Parsing company names...");
-                List<cbCompanyObject> ParsedCompanies =  companyGenerator.GetCompanyNames(companies);
+            List<cbCompanyObject> ParsedCompanies = companyGenerator.GetCompanyNames(companies);
             Console.WriteLine("done");
 
-            Console.Write("Getting each company info...");            
-            if (!Directory.Exists("crunchbase"+Path.DirectorySeparatorChar+"company"))
-                Directory.CreateDirectory("crunchbase"+Path.DirectorySeparatorChar+"company");
+            Console.Write("Getting each company info...");
+            if (!Directory.Exists("crunchbase" + Path.DirectorySeparatorChar + "company"))
+                Directory.CreateDirectory("crunchbase" + Path.DirectorySeparatorChar + "company");
 
             num = 0;
             AllNum = ParsedCompanies.Count;
@@ -269,7 +255,7 @@ namespace CrunchbaseGrabber
                 DownloadChildFileTask atask = new DownloadChildFileTask() { sFilePathDiff = "company", slink = company.permalink, sWebPath = "http://api.crunchbase.com/v/1/company/" };
                 myDownload.cdChildInfoTasks.Add(atask);
 
-                
+
                 if (num % ThreadNum == 0 || num == AllNum)
                 {
                     myDownload.RunChildFileDownloadTask();
@@ -279,7 +265,7 @@ namespace CrunchbaseGrabber
 
                 num++;
                 myDownload.ShowDownloadProgress(num, AllNum, "DownLoad companies:");
-                
+
                 #endregion
             }
             Console.WriteLine("done");
@@ -290,7 +276,7 @@ namespace CrunchbaseGrabber
             String people = myDownload.DownloadParentFileAndGetParentInfo("http://api.crunchbase.com/v/1/people.js", "peoples", "crunchbase" + Path.DirectorySeparatorChar + "people.js");
 
             Console.Write("Parsing peoples names...");
-             List<cbPeoplesObject> parsedPeoples =  peopleGenerator.GetPeoples(people);
+            List<cbPeoplesObject> parsedPeoples = peopleGenerator.GetPeoples(people);
             Console.WriteLine("done");
 
             Console.Write("Getting each persons info...");
@@ -303,7 +289,7 @@ namespace CrunchbaseGrabber
             AllNum = parsedPeoples.Count;
             foreach (cbPeoplesObject person in parsedPeoples)
             {
-                DownloadChildFileTask atask = new DownloadChildFileTask(){ sFilePathDiff = "person",slink = person.permalink, sWebPath = "http://api.crunchbase.com/v/1/person/"};
+                DownloadChildFileTask atask = new DownloadChildFileTask() { sFilePathDiff = "person", slink = person.permalink, sWebPath = "http://api.crunchbase.com/v/1/person/" };
                 myDownload.cdChildInfoTasks.Add(atask);
                 if (num % ThreadNum == 0 || num == AllNum)
                 {
@@ -380,7 +366,7 @@ namespace CrunchbaseGrabber
                     myDownload.RunChildFileDownloadTask();
                 }
 
-              //  myDownload.DownloadChildFile("http://api.crunchbase.com/v/1/financial-organization/", financial.permalink, "financial-organization");
+                //  myDownload.DownloadChildFile("http://api.crunchbase.com/v/1/financial-organization/", financial.permalink, "financial-organization");
 
                 num++;
                 myDownload.ShowDownloadProgress(num, AllNum, "DownLoad financial-organizations:");
@@ -415,8 +401,8 @@ namespace CrunchbaseGrabber
                     myDownload.RunChildFileDownloadTask();
                 }
 
-               // myDownload.DownloadChildFile("http://api.crunchbase.com/v/1/service-provider/", servicep.permalink, "service-provider");
-                
+                // myDownload.DownloadChildFile("http://api.crunchbase.com/v/1/service-provider/", servicep.permalink, "service-provider");
+
                 num++;
                 myDownload.ShowDownloadProgress(num, AllNum, "DownLoad service-providers:");
             }

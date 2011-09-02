@@ -8,3 +8,8 @@ D:\Work\RDF graphDB\sones\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\Mi
 D:\Work\RDF graphDB\sones\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\bin\Debug\MirrorCrunchbaseJSON.exe
 D:\Work\RDF graphDB\sones\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\bin\Debug\MirrorCrunchbaseJSON.pdb
 D:\Work\RDF graphDB\sones\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\Step 2 - Mirror from crunchbase\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\MirrorCrunchbaseJSON.exe
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\Step 2 - Mirror from crunchbase\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\MirrorCrunchbaseJSON.pdb
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\Step 2 - Mirror from crunchbase\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\bin\Debug\MirrorCrunchbaseJSON.exe
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\Step 2 - Mirror from crunchbase\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\bin\Debug\MirrorCrunchbaseJSON.pdb
+C:\Users\andriy\.ssh\Crunchbase-Tutorial\Step 2 - Mirror from crunchbase\MirrorCrunchbaseJSON\MirrorCrunchbaseJSON\obj\Debug\ResolveAssemblyReference.cache
