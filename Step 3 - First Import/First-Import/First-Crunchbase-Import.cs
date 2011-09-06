@@ -52,6 +52,7 @@ namespace First_Import
             using (StreamWriter outfile = new StreamWriter("Step_2_Crunchbase_Company.gql"))
             {
                 StreamWriter outfile2 = new StreamWriter("Step_3_Crunchbase_Company-Competitions.gql");
+                StreamWriter outfileCompany = new StreamWriter("Company.txt");
 
                 string[] CompanyDirectory = Directory.GetFiles("."+Path.DirectorySeparatorChar+"crunchbase"+Path.DirectorySeparatorChar+"company"+Path.DirectorySeparatorChar, "*.js");
 
@@ -65,14 +66,11 @@ namespace First_Import
 
                         StringBuilder sb = new StringBuilder();
 
-                    /*    if
-                        (bufferCompany.ContainsKey(deserialized.permalink.GetHashCode()))
-                            Console.WriteLine(deserialized.permalink+" = "+bufferCompany[deserialized.permalink.GetHashCode()]);
-                    */
+
                         try
                         {
                             bufferCompany.Add(deserialized.permalink.GetHashCode(), deserialized.permalink);
-
+                            outfileCompany.WriteLine(deserialized.permalink);
    
 
                             sb.Append("INSERT INTO Company VALUES (");
@@ -214,6 +212,7 @@ namespace First_Import
                 }
                     outfile.Close();
                     outfile2.Close();
+                    outfileCompany.Close();
 
                    
 
@@ -225,6 +224,7 @@ namespace First_Import
             using (StreamWriter outfile = new StreamWriter("Step_2_Crunchbase_FinancialOrganization.gql"))
             {
                 string[] FinancialOrganizationDirectory = Directory.GetFiles("." + Path.DirectorySeparatorChar + "crunchbase" + Path.DirectorySeparatorChar + "financial-organization" + Path.DirectorySeparatorChar, "*.js");
+                StreamWriter outfileFinancialOrganisation = new StreamWriter("FinancialOrganisation.txt");
 
                 foreach (string fileName in FinancialOrganizationDirectory)
                 {
@@ -235,7 +235,7 @@ namespace First_Import
                            try
                         {
                             bufferFO.Add(newFinancialOrganization.permalink.GetHashCode(), newFinancialOrganization.permalink);
-
+                            outfileFinancialOrganisation.WriteLine(newFinancialOrganization.permalink);
    
 
                     sb.Append("INSERT INTO FinancialOrganization VALUES (");
@@ -339,6 +339,7 @@ namespace First_Import
 					}}
                 outfile.Close();
                 bufferFO.Clear();
+                outfileFinancialOrganisation.Close();
             }
             #endregion
 
@@ -347,6 +348,7 @@ namespace First_Import
             using (StreamWriter outfile = new StreamWriter("Step_2_Crunchbase_Product.gql"))
             {
                 string[] CompanyDirectory = Directory.GetFiles("." + Path.DirectorySeparatorChar + "crunchbase" + Path.DirectorySeparatorChar + "product" + Path.DirectorySeparatorChar, "*.js");
+                StreamWriter outfileProduct = new StreamWriter("Product.txt");
 
                 foreach (string fileName in CompanyDirectory)
                 {
@@ -365,7 +367,7 @@ namespace First_Import
                                 try
                                 {
                                     bufferFO.Add(deserialized.permalink.GetHashCode(), deserialized.permalink);
-
+                                    outfileProduct.WriteLine(deserialized.permalink);
 
 
                                     sb.Append("INSERT INTO Product VALUES (");
@@ -482,6 +484,7 @@ namespace First_Import
                 }
                 outfile.Close();
                 bufferFO.Clear();
+                outfileProduct.Close();
             }
             #endregion
 
@@ -490,6 +493,7 @@ namespace First_Import
             using (StreamWriter outfile = new StreamWriter("Step_2_Crunchbase_Person.gql"))
             {
                 string[] CompanyDirectory = Directory.GetFiles("." + Path.DirectorySeparatorChar + "crunchbase" + Path.DirectorySeparatorChar + "person" + Path.DirectorySeparatorChar, "*.js");
+                StreamWriter outfilePerson = new StreamWriter("Person.txt");
 
                 foreach (string fileName in CompanyDirectory)
                 {
@@ -502,7 +506,7 @@ namespace First_Import
                         try
                            {
                                 bufferFO.Add(deserialized.permalink.GetHashCode(), deserialized.permalink);
-
+                                outfilePerson.WriteLine(deserialized.permalink);
 
                     sb.Append("INSERT INTO Person VALUES (");
 
@@ -605,6 +609,7 @@ namespace First_Import
 
                 outfile.Close();
                 bufferFO.Clear();
+                outfilePerson.Close();
             }
             #endregion
 
@@ -613,6 +618,7 @@ namespace First_Import
             using (StreamWriter outfile = new StreamWriter("Step_2_Crunchbase_ServiceProvider.gql"))
             {
                 string[] CompanyDirectory = Directory.GetFiles("." + Path.DirectorySeparatorChar + "crunchbase" + Path.DirectorySeparatorChar + "service-provider" + Path.DirectorySeparatorChar, "*.js");
+                StreamWriter outfileService = new StreamWriter("ServiceProvider.txt");
 
                 foreach (string fileName in CompanyDirectory)
                 {
@@ -624,6 +630,7 @@ namespace First_Import
                     try
                     {
                         bufferFO.Add(deserialized.permalink.GetHashCode(), deserialized.permalink);
+                        outfileService.WriteLine(deserialized.permalink);
 
                     sb.Append("INSERT INTO ServiceProvider VALUES (");
 
@@ -701,6 +708,7 @@ namespace First_Import
                 outfile.Close();
                 bufferFO.Clear();
                 bufferCompany.Clear();
+                outfileService.Close();
             }
             #endregion
 
