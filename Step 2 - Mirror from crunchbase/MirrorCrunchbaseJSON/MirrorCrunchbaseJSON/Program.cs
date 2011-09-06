@@ -169,9 +169,16 @@ namespace CrunchbaseGrabber
                     String jsonStream = GetJsonStream(sWebPath, slink);
                     if (jsonStream != null)
                     {
-                        StreamWriter file = new StreamWriter(sChildPath);
-                        file.Write(jsonStream);
-                        file.Close();
+                        Thread.Sleep(500);
+                        try
+                        {
+                            StreamWriter file = new StreamWriter(sChildPath);
+                            file.Write(jsonStream);
+                            file.Close();
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
 
