@@ -14,7 +14,7 @@ namespace Crunchbase.ConnectingNodes.Connections
      * 
      */
 
-    public class EmbeddedVideos: IScriptWriter
+    public class EmbeddedVideos : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -38,13 +38,17 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company)
-                writeEmbeddedVideos(writer, "CompanyVideo", (model as Company).permalink, (model as Company).video_embeds);
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeEmbeddedVideos(writer, "CompanyVideo", (model as Company).permalink, (model as Company).video_embeds);
             if (model is FinancialOrganization)
-                writeEmbeddedVideos(writer, "FinancialOrganizationVideo", (model as FinancialOrganization).permalink, (model as FinancialOrganization).video_embeds);
+                if (ErrorLinking.financialOrganization.Contains((model as FinancialOrganization).permalink))
+                    writeEmbeddedVideos(writer, "FinancialOrganizationVideo", (model as FinancialOrganization).permalink, (model as FinancialOrganization).video_embeds);
             if (model is Person)
-                writeEmbeddedVideos(writer, "PersonVideo", (model as Person).permalink, (model as Person).video_embeds);
+                if (ErrorLinking.person.Contains((model as Person).permalink))
+                    writeEmbeddedVideos(writer, "PersonVideo", (model as Person).permalink, (model as Person).video_embeds);
             if (model is Product)
-                writeEmbeddedVideos(writer, "ProductVideo", (model as Product).permalink, (model as Product).video_embeds);
+                if (ErrorLinking.product.Contains((model as Product).permalink))
+                    writeEmbeddedVideos(writer, "ProductVideo", (model as Product).permalink, (model as Product).video_embeds);
         }
 
         #region (private, static) writeEmbeddedVideos(System.IO.StreamWriter, string, string, List<Link>)

@@ -31,7 +31,6 @@ namespace Crunchbase.Model
         public String created_at { get; set; }
         public String updated_at { get; set; }
         public String overview { get; set; }
-        public Image image { get; set; }
         public List<Permalink> products { get; set; }
         public List<Relationship> relationships { get; set; }
         public List<Dictionary<string, Permalink>> competitions { get; set; }
@@ -42,7 +41,6 @@ namespace Crunchbase.Model
         public List<Milestone> milestones { get; set; }
         public IPO ipo { get; set; }
         public List<Video> video_embeds { get; set; }
-        public List<Image> screenshots { get; set; }
         public List<Link> external_links { get; set; }
 
         public DateTime? CreatedAt

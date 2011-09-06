@@ -6,7 +6,7 @@ using Crunchbase.Model;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class WebPresences: IScriptWriter
+    public class WebPresences : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -27,7 +27,8 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Person)
-                writeWebPresences(writer, (model as Person).permalink, (model as Person).web_presences);
+                if (ErrorLinking.person.Contains((model as Person).permalink))
+                    writeWebPresences(writer, (model as Person).permalink, (model as Person).web_presences);
 
         }
 
@@ -42,7 +43,9 @@ namespace Crunchbase.ConnectingNodes.Connections
                 writer.Write(presence.external_url.GetKeyValueString("ExternalURL").StringWithComma());
                 writer.Write(presence.title.GetKeyValueString("Title").StringWithComma());
                 writer.WriteLine(")");
+
             });
+
         }
 
         #endregion

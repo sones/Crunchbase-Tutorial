@@ -13,7 +13,7 @@ namespace Crunchbase.ConnectingNodes.Connections
      * An investment can be raised by companies, financial organisations or persons.
      * 
      */
-    public class FundingRounds: IScriptWriter
+    public class FundingRounds : IScriptWriter
     {
         #region IScriptWriter Interface
 
@@ -37,7 +37,8 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company)
-                writeCompany(writer, (model as Company));
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeCompany(writer, (model as Company));
         }
 
         #region (private, static) writeCompany(System.IO.StreamWriter, Company)
@@ -65,6 +66,7 @@ namespace Crunchbase.ConnectingNodes.Connections
         {
             if (investors != null && investors.Count > 0)
             {
+
                 writer.Write(GetPermalinks(investors, "company").GetSETOF("CompanyInvestors", "Permalink").StringWithComma());
                 writer.Write(GetPermalinks(investors, "financial_org").GetSETOF("FinancialOrganizationInvestors", "Permalink").StringWithComma());
                 writer.Write(GetPermalinks(investors, "person").GetSETOF("PersonInvestors", "Permalink").StringWithComma());
@@ -99,6 +101,6 @@ namespace Crunchbase.ConnectingNodes.Connections
 
         #endregion
 
-        #endregion  
+        #endregion
     }
 }

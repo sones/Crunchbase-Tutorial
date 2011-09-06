@@ -9,6 +9,17 @@ using System.Threading;
 
 namespace Crunchbase.ConnectingNodes
 {
+    static class ErrorLinking
+    {
+
+
+
+        public static List<string> company { get; set; }
+        public static List<string> person { get; set; }
+        public static List<string> product { get; set; }
+        public static List<string> financialOrganization { get; set; }
+        public static List<string> serviceProvider { get; set; }
+    }
     /**
      * <summary>Crunchbase.ConnectingNodes is a small tool to create gql scripts to enrich existing crunchbase gql script data.</summary>
      */
@@ -38,7 +49,7 @@ namespace Crunchbase.ConnectingNodes
         #endregion
 
         #region (public) methods
-        public void Run() 
+        public void Run()
         {
             jobs.ForEach((j) => j.writeAlterType());
 
@@ -61,6 +72,7 @@ namespace Crunchbase.ConnectingNodes
             Console.WriteLine("A small tool to create gql scripts to enrich existing crunchbase gql script");
             Console.WriteLine("data.");
             Console.WriteLine();
+
             #endregion
 
             #region get JSON files
@@ -82,19 +94,35 @@ namespace Crunchbase.ConnectingNodes
             //The ScriptWriter objects do the entire work of writing text to the output.
             //Make sure to never define two jobs writing to the same output.
             ConnectingNodes prog = new ConnectingNodes(CompanyFiles, PersonFiles, FinancialOrgFiles, ProductFiles, ServiceProviderFiles,
-                new Job() { Output = File.CreateText(outdir + "\\Step_4_Relationships.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Relationships") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_5_FoundingRounds.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.FundingRounds") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_6_Funds.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Funds") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_7_Milestones.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Milestones") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_8_Acquisitions.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Acquisitions") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_9_Providerships.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Providerships") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_10_Offices.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Offices") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_11_Degrees.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Degrees") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_12_IPO.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.IPO") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_13_ExternalLinks.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.ExternalLinks") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_14_EmbeddedVideos.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.EmbeddedVideos") },
-                new Job() { Output = File.CreateText(outdir + "\\Step_15_WebPresences.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.WebPresences") }
-            );
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_4_Relationships.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Relationships") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_5_FoundingRounds.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.FundingRounds") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_6_Funds.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Funds") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_7_Milestones.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Milestones") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_8_Acquisitions.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Acquisitions") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_9_Providerships.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Providerships") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_10_Offices.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Offices") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_11_Degrees.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.Degrees") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_12_IPO.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.IPO") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_13_ExternalLinks.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.ExternalLinks") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_14_EmbeddedVideos.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.EmbeddedVideos") },
+                new Job() { Output = File.CreateText(outdir + Path.DirectorySeparatorChar + "Step_15_WebPresences.gql"), ScriptWriter = ScriptWriterFactory.getScriptWriters("Crunchbase.ConnectingNodes.Connections.WebPresences") });
+
+
+
+            ErrorLinking.company = new List<string>();
+            ErrorLinking.person = new List<string>();
+            ErrorLinking.product = new List<string>();
+            ErrorLinking.financialOrganization = new List<string>();
+            ErrorLinking.serviceProvider = new List<string>();
+
+
+            ErrorLinking.company = File.ReadAllLines("Company.txt").ToList();
+            ErrorLinking.person = File.ReadAllLines("Person.txt").ToList();
+            ErrorLinking.product = File.ReadAllLines("Product.txt").ToList();
+            ErrorLinking.financialOrganization = File.ReadAllLines("FinancialOrganisation.txt").ToList();
+            ErrorLinking.serviceProvider = File.ReadAllLines("ServiceProvider.txt").ToList();
+
+
             prog.Run();
             #endregion
         }

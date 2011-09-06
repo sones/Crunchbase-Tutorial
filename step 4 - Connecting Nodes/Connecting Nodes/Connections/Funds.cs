@@ -6,7 +6,7 @@ using Crunchbase.Model;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class Funds: IScriptWriter
+    public class Funds : IScriptWriter
     {
         #region IScriptWriter Interface
 
@@ -27,7 +27,8 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is FinancialOrganization)
-                writeFinancialOrganization(writer, (model as FinancialOrganization));
+                if (ErrorLinking.financialOrganization.Contains((model as FinancialOrganization).permalink))
+                    writeFinancialOrganization(writer, (model as FinancialOrganization));
         }
 
         #region (private, static) writeFunds(System.IO.StreamWriter, FinancialOrganization)

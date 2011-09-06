@@ -6,7 +6,7 @@ using Crunchbase.Model;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class IPO: IScriptWriter
+    public class IPO : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -27,7 +27,8 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company && (model as Company).ipo != null)
-                writeIPO(writer, (model as Company).permalink, (model as Company).ipo);
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeIPO(writer, (model as Company).permalink, (model as Company).ipo);
         }
 
         #region (private, static) writeIPO(System.IO.StreamWriter, String, Model.IPO)
