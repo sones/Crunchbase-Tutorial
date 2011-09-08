@@ -35,7 +35,8 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company)
-                writeAcquisition(writer, (model as Company).permalink, (model as Company).acquisitions);
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeAcquisition(writer, (model as Company).permalink, (model as Company).acquisitions);
 
         }
 
@@ -44,6 +45,8 @@ namespace Crunchbase.ConnectingNodes.Connections
         private static void writeAcquisition(System.IO.StreamWriter writer, string permalink, List<Model.Acquisition> acquisitions)
         {
             acquisitions.ForEach(acquisition =>
+            {
+                if (ErrorLinking.company.Contains(acquisition.company.permalink))
                 {
                     writer.Write("INSERT INTO Acquisition VALUES (");
                     writer.Write(permalink.GetKeyRefString("Acquirer", "Permalink"));
@@ -55,7 +58,8 @@ namespace Crunchbase.ConnectingNodes.Connections
                     writer.Write(acquisition.source_url.GetKeyValueString("SourceURL").StringWithComma());
                     writer.Write(acquisition.term_code.GetKeyValueString("TermCode").StringWithComma());
                     writer.WriteLine(")");
-                });
+                }
+            });
         }
 
         #endregion

@@ -6,7 +6,7 @@ using Crunchbase.Model;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class Providerships: IScriptWriter
+    public class Providerships : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -29,9 +29,11 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company)
-                writeProviderships(writer, "CompanyProvidership", (model as Company).permalink, (model as Company).providerships);
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeProviderships(writer, "CompanyProvidership", (model as Company).permalink, (model as Company).providerships);
             if (model is FinancialOrganization)
-                writeProviderships(writer, "FinancialOrganizationProvidership", (model as FinancialOrganization).permalink, (model as FinancialOrganization).providerships);
+                if (ErrorLinking.financialOrganization.Contains((model as FinancialOrganization).permalink))
+                    writeProviderships(writer, "FinancialOrganizationProvidership", (model as FinancialOrganization).permalink, (model as FinancialOrganization).providerships);
         }
 
         #region (private, static) writeProviderships(System.IO.StreamWriter, String, String, List<Providership>)
@@ -40,12 +42,15 @@ namespace Crunchbase.ConnectingNodes.Connections
         {
             providerships.ForEach((pro) =>
             {
-                writer.Write("INSERT INTO Providership VALUES (");
-                writer.Write(pro.provider.permalink.GetKeyRefString("Provider", "Permalink"));
-                writer.Write(pro.title.GetKeyValueString("Title").StringWithComma());
-                writer.Write(pro.is_past.GetKeyValueString("IsPast").StringWithComma());
-                writer.Write(permalink.GetKeyRefString(key, "Permalink").StringWithComma());
-                writer.WriteLine(")");
+                if (ErrorLinking.serviceProvider.Contains(pro.provider.permalink))
+                {
+                    writer.Write("INSERT INTO Providership VALUES (");
+                    writer.Write(pro.provider.permalink.GetKeyRefString("Provider", "Permalink"));
+                    writer.Write(pro.title.GetKeyValueString("Title").StringWithComma());
+                    writer.Write(pro.is_past.GetKeyValueString("IsPast").StringWithComma());
+                    writer.Write(permalink.GetKeyRefString(key, "Permalink").StringWithComma());
+                    writer.WriteLine(")");
+                }
             });
         }
 

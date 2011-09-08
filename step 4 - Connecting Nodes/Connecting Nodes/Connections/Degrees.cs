@@ -14,7 +14,7 @@ namespace Crunchbase.ConnectingNodes.Connections
      * 
      */
 
-    public class Degrees: IScriptWriter
+    public class Degrees : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -35,7 +35,8 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Person)
-                writeDegrees(writer, (model as Person).permalink, (model as Person).degrees);
+                if (ErrorLinking.person.Contains((model as Person).permalink))
+                    writeDegrees(writer, (model as Person).permalink, (model as Person).degrees);
         }
 
         #region (private, static) writeDegrees(System.IO.StreamWriter, string, List<Degree>)

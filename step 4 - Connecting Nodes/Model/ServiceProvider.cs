@@ -18,7 +18,6 @@ namespace Crunchbase.Model
         public String created_at { get; set; }
         public String updated_at { get; set; }
         public String overview { get; set; }
-        public Image image { get; set; }
         public List<Office> offices { get; set; }
         public List<Link> external_links { get; set; }
 
