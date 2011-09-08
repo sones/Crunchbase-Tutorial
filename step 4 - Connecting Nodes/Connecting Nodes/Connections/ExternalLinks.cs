@@ -6,7 +6,7 @@ using Crunchbase.Model;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class ExternalLinks: IScriptWriter
+    public class ExternalLinks : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -31,15 +31,20 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company)
-                writeExternalLinks(writer, "CompanyLink", (model as Company).permalink, (model as Company).external_links);
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeExternalLinks(writer, "CompanyLink", (model as Company).permalink, (model as Company).external_links);
             if (model is FinancialOrganization)
-                writeExternalLinks(writer, "FinancialOrganizationLink", (model as FinancialOrganization).permalink, (model as FinancialOrganization).external_links);
+                if (ErrorLinking.financialOrganization.Contains((model as FinancialOrganization).permalink))
+                    writeExternalLinks(writer, "FinancialOrganizationLink", (model as FinancialOrganization).permalink, (model as FinancialOrganization).external_links);
             if (model is Person)
-                writeExternalLinks(writer, "PersonLink", (model as Person).permalink, (model as Person).external_links);
+                if (ErrorLinking.person.Contains((model as Person).permalink))
+                    writeExternalLinks(writer, "PersonLink", (model as Person).permalink, (model as Person).external_links);
             if (model is Product)
-                writeExternalLinks(writer, "ProductLink", (model as Product).permalink, (model as Product).external_links);
+                if (ErrorLinking.product.Contains((model as Product).permalink))
+                    writeExternalLinks(writer, "ProductLink", (model as Product).permalink, (model as Product).external_links);
             if (model is ServiceProvider)
-                writeExternalLinks(writer, "ServiceProviderLink", (model as ServiceProvider).permalink, (model as ServiceProvider).external_links);
+                if (ErrorLinking.serviceProvider.Contains((model as ServiceProvider).permalink))
+                    writeExternalLinks(writer, "ServiceProviderLink", (model as ServiceProvider).permalink, (model as ServiceProvider).external_links);
 
         }
 
@@ -48,13 +53,13 @@ namespace Crunchbase.ConnectingNodes.Connections
         private static void writeExternalLinks(System.IO.StreamWriter writer, string key, string permalink, List<Link> links)
         {
             links.ForEach(link =>
-                {
-                    writer.Write("INSERT INTO ExternalLink VALUES (");
-                    writer.Write(permalink.GetKeyRefString(key, "Permalink"));
-                    writer.Write(link.external_url.GetKeyValueString("ExternalURL").StringWithComma());
-                    writer.Write(link.title.GetKeyValueString("Title").StringWithComma());
-                    writer.WriteLine(")");
-                });
+            {
+                writer.Write("INSERT INTO ExternalLink VALUES (");
+                writer.Write(permalink.GetKeyRefString(key, "Permalink"));
+                writer.Write(link.external_url.GetKeyValueString("ExternalURL").StringWithComma());
+                writer.Write(link.title.GetKeyValueString("Title").StringWithComma());
+                writer.WriteLine(")");
+            });
         }
 
         #endregion

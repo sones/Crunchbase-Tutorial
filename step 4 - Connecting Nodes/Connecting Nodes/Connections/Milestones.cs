@@ -7,7 +7,7 @@ using Crunchbase.ConnectingNodes;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class Milestones: IScriptWriter
+    public class Milestones : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -31,13 +31,17 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Person)
-                writeMilestone(writer, "PersonMilestone", (model as Person).permalink, (model as Person).milestones);
+                if (ErrorLinking.person.Contains((model as Person).permalink))
+                    writeMilestone(writer, "PersonMilestone", (model as Person).permalink, (model as Person).milestones);
             if (model is Product)
-                writeMilestone(writer, "ProductMilestone", (model as Product).permalink, (model as Product).milestones);
+                if (ErrorLinking.product.Contains((model as Product).permalink))
+                    writeMilestone(writer, "ProductMilestone", (model as Product).permalink, (model as Product).milestones);
             if (model is FinancialOrganization)
-                writeMilestone(writer, "FinancialOrganizationMilestone", (model as FinancialOrganization).permalink, (model as FinancialOrganization).milestones);
+                if (ErrorLinking.financialOrganization.Contains((model as FinancialOrganization).permalink))
+                    writeMilestone(writer, "FinancialOrganizationMilestone", (model as FinancialOrganization).permalink, (model as FinancialOrganization).milestones);
             if (model is Company)
-                writeMilestone(writer, "CompanyMilestone", (model as Company).permalink, (model as Company).milestones);
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeMilestone(writer, "CompanyMilestone", (model as Company).permalink, (model as Company).milestones);
 
         }
 
@@ -46,15 +50,15 @@ namespace Crunchbase.ConnectingNodes.Connections
         private static void writeMilestone(System.IO.StreamWriter writer, string key, string permalink, List<Milestone> milestones)
         {
             milestones.ForEach(stone =>
-                {
-                    writer.Write("INSERT INTO Milestone VALUES (");
-                    writer.Write(permalink.GetKeyRefString(key, "Permalink"));
-                    writer.Write(stone.description.GetKeyValueString("Description").StringWithComma());
-                    writer.Write(stone.source_description.GetKeyValueString("SourceDescription").StringWithComma());
-                    writer.Write(stone.source_url.GetKeyValueString("SourceURL").StringWithComma());
-                    writer.Write(stone.StonedAt.GetKeyValueString("Stoned_At").StringWithComma());
-                    writer.WriteLine(")");
-                });
+            {
+                writer.Write("INSERT INTO Milestone VALUES (");
+                writer.Write(permalink.GetKeyRefString(key, "Permalink"));
+                writer.Write(stone.description.GetKeyValueString("Description").StringWithComma());
+                writer.Write(stone.source_description.GetKeyValueString("SourceDescription").StringWithComma());
+                writer.Write(stone.source_url.GetKeyValueString("SourceURL").StringWithComma());
+                writer.Write(stone.StonedAt.GetKeyValueString("Stoned_At").StringWithComma());
+                writer.WriteLine(")");
+            });
         }
 
         #endregion

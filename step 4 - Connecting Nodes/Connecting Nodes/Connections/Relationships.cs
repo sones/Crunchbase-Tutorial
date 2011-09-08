@@ -6,7 +6,7 @@ using Crunchbase.Model;
 
 namespace Crunchbase.ConnectingNodes.Connections
 {
-    public class Relationships: IScriptWriter
+    public class Relationships : IScriptWriter
     {
         #region IScriptWriter interface
 
@@ -29,9 +29,16 @@ namespace Crunchbase.ConnectingNodes.Connections
             if (model == null)
                 return;
             if (model is Company)
-                writeRelationship(writer, "CompanyRelationship", (model as Company).permalink, (model as Company).relationships);
+            {
+                if (ErrorLinking.company.Contains((model as Company).permalink))
+                    writeRelationship(writer, "CompanyRelationship", (model as Company).permalink, (model as Company).relationships);
+
+            }
             if (model is FinancialOrganization)
-                writeRelationship(writer, "FinancialOrganizationRelationship", (model as FinancialOrganization).permalink, (model as FinancialOrganization).relationships);
+            {
+                if (ErrorLinking.financialOrganization.Contains((model as FinancialOrganization).permalink))
+                    writeRelationship(writer, "FinancialOrganizationRelationship", (model as FinancialOrganization).permalink, (model as FinancialOrganization).relationships);
+            }
         }
 
         #region (private, static) writeRelationship(System.IO.StreamWriter, String, String, List<Relationship>)
@@ -40,12 +47,16 @@ namespace Crunchbase.ConnectingNodes.Connections
         {
             relationships.ForEach((rel) =>
             {
-                writer.Write("INSERT INTO Relationship VALUES (");
-                writer.Write(rel.person.permalink.GetKeyRefString("Person", "Permalink"));
-                writer.Write(rel.title.GetKeyValueString("Title").StringWithComma());
-                writer.Write(rel.is_past.GetKeyValueString("IsPast").StringWithComma());
-                writer.Write(permalink.GetKeyRefString(key, "Permalink").StringWithComma());
-                writer.WriteLine(")");
+                if (ErrorLinking.person.Contains(rel.person.permalink))
+                {
+                    writer.Write("INSERT INTO Relationship VALUES (");
+                    writer.Write(rel.person.permalink.GetKeyRefString("Person", "Permalink"));
+                    writer.Write(rel.title.GetKeyValueString("Title").StringWithComma());
+                    writer.Write(rel.is_past.GetKeyValueString("IsPast").StringWithComma());
+                    writer.Write(permalink.GetKeyRefString(key, "Permalink").StringWithComma());
+                    writer.WriteLine(")");
+                }
+
             });
         }
 
